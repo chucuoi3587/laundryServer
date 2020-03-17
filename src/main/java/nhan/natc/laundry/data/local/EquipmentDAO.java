@@ -9,8 +9,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table(name = "inventory")
-public class InventoryDAO {
+@Table(name = "equipment")
+public class EquipmentDAO {
 
 	@Id
     @GeneratedValue(generator = "uuid")
@@ -24,15 +24,15 @@ public class InventoryDAO {
 	@Column(name = "description")
 	private String mDescription;
 
-	public InventoryDAO() {
+	public EquipmentDAO() {
 		
 	}
 	
-	public InventoryDAO(String name) {
-		super();
+	public EquipmentDAO(String name, String description) {
 		this.mName = name;
+		this.mDescription = description;
 	}
-
+	
 	public String getId() {
 		return mId;
 	}
@@ -48,13 +48,14 @@ public class InventoryDAO {
 	public void setName(String name) {
 		this.mName = name;
 	}
-	
+
+	public String getDescription() {
+		return mDescription;
+	}
+
 	public void setDescription(String description) {
 		this.mDescription = description;
 	}
 	
-	public String getDescription() {
-		return mDescription;
-	}
-		
+	
 }

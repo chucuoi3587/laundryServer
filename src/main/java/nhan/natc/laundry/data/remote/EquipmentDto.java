@@ -2,8 +2,8 @@ package nhan.natc.laundry.data.remote;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class InventoryDto {
-
+public class EquipmentDto {
+	
 	@JsonProperty("id")
 	private String mId;
 	
@@ -12,16 +12,17 @@ public class InventoryDto {
 	
 	@JsonProperty("description")
 	private String mDescription;
-	
+
 	public String getId() {
 		return mId;
 	}
-	
+
 	public String getName() {
 		return mName;
 	}
-	
+
 	public String getDescription() {
 		return mDescription;
 	}
+	
 }

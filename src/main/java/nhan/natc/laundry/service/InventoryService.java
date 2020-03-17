@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import nhan.natc.laundry.data.local.InventoryDAO;
 import nhan.natc.laundry.data.remote.InventoryDto;
 import nhan.natc.laundry.data.repository.InventoryRepository;
+import nhan.natc.laundry.exception.DefaultException;
 
 @Service("inventoryService")
 public class InventoryService {
@@ -27,6 +28,6 @@ public class InventoryService {
 			inventoryDao.setName(inventoryDto.getName());
 			return inventoryRepository.save(inventoryDao);
 		}
-		return new InventoryDAO();
+		throw new DefaultException("Inventory not found.");
 	}
 }
