@@ -17,6 +17,7 @@ import nhan.natc.laundry.data.local.TokenDAO;
 import nhan.natc.laundry.data.local.UserDAO;
 import nhan.natc.laundry.data.remote.LoginDto;
 import nhan.natc.laundry.data.remote.RegisterDto;
+import nhan.natc.laundry.data.remote.UserFilterRequest;
 import nhan.natc.laundry.exception.UserNotFoundException;
 import nhan.natc.laundry.payload.DefaultResponse;
 import nhan.natc.laundry.payload.TokenResponse;
@@ -44,14 +45,9 @@ public class UserController {
 		throw new UserNotFoundException("Invalid username or password!");
 	}
 		
-	@GetMapping("/user/all")
-	public ResponseEntity<DefaultResponse> getAll() {
-		List<UserResponse> responses = new ArrayList<>();
-		for (UserDAO user : userService.findAll()) {
-			UserResponse res = new UserResponse(user.getId(), user.getEmail(), user.getFirstName(), user.getLastName(), user.getUserStatus(), user.getRole(), user.getAvatar());
-			responses.add(res);
-		}
-		return ResponseEntity.status(HttpStatus.OK).body(new DefaultResponse(responses));		
+	@PostMapping("/user/all")
+	public ResponseEntity<DefaultResponse> getAll(@RequestBody UserFilterRequest filter) {
+		return ResponseEntity.status(HttpStatus.OK).body(new DefaultResponse(userService.findAll(filter), filter.isHasMoreRecord()));		
 	}
 	
 	@GetMapping("/user/me")

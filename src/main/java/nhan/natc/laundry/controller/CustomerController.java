@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import nhan.natc.laundry.data.remote.CustomerDto;
+import nhan.natc.laundry.data.remote.CustomerFilterRequest;
 import nhan.natc.laundry.payload.DefaultResponse;
 import nhan.natc.laundry.service.CustomerService;
 
@@ -29,9 +30,9 @@ public class CustomerController {
 		return ResponseEntity.status(HttpStatus.OK).body(new DefaultResponse(customerService.updateCustomer(customerDto.getId(), customerDto)));
 	}
 	
-	@GetMapping("/customer/all")
-	public ResponseEntity<DefaultResponse> getCustomerList() {
-		return ResponseEntity.status(HttpStatus.OK).body(new DefaultResponse(customerService.findAll()));		
+	@PostMapping("/customer/all")
+	public ResponseEntity<DefaultResponse> getCustomerList(@RequestBody CustomerFilterRequest filter) {
+		return ResponseEntity.status(HttpStatus.OK).body(new DefaultResponse(customerService.findAll(filter), filter.isHasMoreRecord()));		
 	}
 	
 	@GetMapping("/customer/{customerId}")

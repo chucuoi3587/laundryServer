@@ -3,8 +3,13 @@ package nhan.natc.laundry.service;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +17,7 @@ import nhan.natc.laundry.data.local.RoleDAO;
 import nhan.natc.laundry.data.local.TokenDAO;
 import nhan.natc.laundry.data.local.UserDAO;
 import nhan.natc.laundry.data.remote.RegisterDto;
+import nhan.natc.laundry.data.remote.UserFilterRequest;
 import nhan.natc.laundry.data.repository.DBFileRepository;
 import nhan.natc.laundry.data.repository.RoleRepository;
 import nhan.natc.laundry.data.repository.UserRepository;
@@ -79,8 +85,13 @@ public class UserService {
 		return null;
 	}
 	
-	public List<UserDAO> findAll() {
-		return userRepository.findAll();
+	public List<UserResponse> findAll(UserFilterRequest filter) {
+		Pageable page = PageRequest.of(filter.getFetchPage(), filter.getFetchLimit());
+		Page<UserDAO> userList = userRepository.findAll(page); 
+		filter.setHasMoreRecord(filter.getFetchPage() < userList.getTotalPages() - 1);
+		return userList.stream()
+				.map(UserResponse::fromEntity)
+				.collect(Collectors.toList());
 	}
 	
 	public UserResponse updateUser(RegisterDto register) {

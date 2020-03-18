@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import nhan.natc.laundry.data.local.FileDAO;
 import nhan.natc.laundry.data.local.RoleDAO;
+import nhan.natc.laundry.data.local.UserDAO;
 import nhan.natc.laundry.data.local.UserStatusDAO;
 
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
@@ -43,5 +44,10 @@ public class UserResponse {
 		if (avatar != null)
 			this.mAvatar = avatar.getId();
 	}	
+	
+	public static final UserResponse fromEntity(UserDAO userDAO) {
+		return new UserResponse(userDAO.getId(), userDAO.getEmail(), userDAO.getFirstName(), userDAO.getLastName(), userDAO.getUserStatus(), 
+				userDAO.getRole(), userDAO.getAvatar());
+	}
 
 }
