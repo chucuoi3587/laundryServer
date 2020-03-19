@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import nhan.natc.laundry.data.remote.InventoryDto;
+import nhan.natc.laundry.data.remote.InventoryFilterRequest;
 import nhan.natc.laundry.payload.DefaultResponse;
 import nhan.natc.laundry.service.InventoryService;
 
@@ -25,5 +26,10 @@ public class InventoryController {
 	@PostMapping("/inventory/update")
 	public ResponseEntity<DefaultResponse> updateInventory(@RequestBody InventoryDto inventoryDto) {
 		return ResponseEntity.status(HttpStatus.OK).body(new DefaultResponse(inventoryService.updateInventory(inventoryDto)));
+	}
+	
+	@PostMapping("/inventory/all")
+	public ResponseEntity<DefaultResponse> getAll(@RequestBody InventoryFilterRequest filter) {
+		return ResponseEntity.status(HttpStatus.OK).body(new DefaultResponse(inventoryService.getAll(filter)));
 	}
 }

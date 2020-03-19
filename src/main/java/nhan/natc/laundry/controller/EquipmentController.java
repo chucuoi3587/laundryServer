@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import nhan.natc.laundry.data.remote.EquipmentDto;
+import nhan.natc.laundry.data.remote.EquipmentFilterRequest;
 import nhan.natc.laundry.payload.DefaultResponse;
 import nhan.natc.laundry.service.EquipmentService;
 
@@ -25,5 +26,10 @@ public class EquipmentController {
 	@PostMapping("/equipment/update")
 	public ResponseEntity<DefaultResponse> updateEquipment(@RequestBody EquipmentDto equipmentDto) {
 		return ResponseEntity.status(HttpStatus.OK).body(new DefaultResponse(equipmentService.updateEquipment(equipmentDto)));
+	}
+	
+	@PostMapping("/equipment/all")
+	public ResponseEntity<DefaultResponse> getAll(@RequestBody EquipmentFilterRequest filter) {
+		return ResponseEntity.status(HttpStatus.OK).body(new DefaultResponse(equipmentService.getAll(filter)));
 	}
 }
